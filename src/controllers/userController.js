@@ -1,7 +1,5 @@
 const User = require('../models/user');
-const fs = require('fs').promises;
-const path = require('path');
-const resumeUploadPath = './uploads/resumes';
+const { uploadToCloudinary } = require('../utils/cloudinary');
 
 const createUser = async (req, res) => {
     const { firstname, lastname, email, phoneNumber, location, profession, sector, yoe, linkedInUrl, gitHubUrl, portfolioUrl, stack } = req.body; // Destructure user data
@@ -17,14 +15,14 @@ const createUser = async (req, res) => {
     try {
         if (resumeBuffer) {
             const filename = `${fullname}-resume.pdf`;
-            const filePath = path.join(resumeUploadPath, filename); // Create full file path
-            try {
-              await fs.writeFile(filePath, resumeBuffer); // Write resume to file system
-              newUser.resumeUrl = filePath; // Update User model with resume URL
-            } catch (error) {
-              console.error('Error saving resume:', error);
-            }
-          }
+            const folder = 'job-market-resumes';
+
+            // Upload resume to Cloudinary
+            const resumeUrl = await uploadToCloudinary(resumeBuffer, filename, folder);
+
+            newUser.resumeUrl = resumeUrl;
+        }
+
         await newUser.save();
         res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
