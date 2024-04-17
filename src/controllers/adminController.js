@@ -1,6 +1,5 @@
 const Admin = require('../models/admin');
 const bcrypt = require("bcryptjs");
-const logger = require("../utils/logger");
 const jwtUtils = require("../utils/jwtUtils");
 
 const createAdmin = async (req, res) => {
@@ -20,8 +19,8 @@ const createAdmin = async (req, res) => {
         await admin.save();
         res.status(201).json({ message: 'Admin created successfully' });
     } catch (error) {
-        logger.error(error.message);
-        logger.error(error.stack);
+        console.error(error.message);
+        console.error(error.stack);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
@@ -51,7 +50,7 @@ const loginAdmin = async (req, res) => {
 
         res.json({ token, refreshToken, msg: "Login successful" });
     } catch (error) {
-        logger.error(error.message);
+        console.error(error.message);
         res.status(500).send("Server Error");
     }
 };
@@ -76,7 +75,7 @@ const refreshToken = async (req, res) => {
 
         res.json({ token });
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ error: 'Refresh token has expired' });
         }

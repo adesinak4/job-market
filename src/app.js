@@ -1,7 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const connectDB = require("./utils/db");
-const logger = require("./utils/logger");
+const console = require("./utils/console");
 const adminRoute = require("./routes/adminRoute");
 // const userRoute = require("./routes/userRoute");
 
@@ -25,11 +25,11 @@ app.use("/api/v1/admin", adminRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  logger.error(err.stack);
+  console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
 
 // Start the server
 app.listen(PORT, () => {
-  logger.info(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
