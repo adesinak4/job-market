@@ -1,7 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
 const connectDB = require("./utils/db");
-const console = require("./utils/console");
 const adminRoute = require("./routes/adminRoute");
 // const userRoute = require("./routes/userRoute");
 
