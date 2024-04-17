@@ -1,5 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
+const cors = require("cors");
 const connectDB = require("./utils/db");
 const adminRoute = require("./routes/adminRoute");
 // const userRoute = require("./routes/userRoute");
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
+app.use(cors());
 
 // Routes
 app.use("/api/v1/admin", adminRoute);
