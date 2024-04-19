@@ -14,7 +14,7 @@ router.post("/login", adminController.loginAdmin);
 router.put("/refresh", adminController.refreshToken);
 
 // Create a new user with optional resume upload
-router.post('/add', authMiddleware, upload.single('resume'), userController.createUser);
+router.post('/add', upload.single('resume'), userController.createUser);
 
 // Fetch users with optional filters
 router.get('/fetch', authMiddleware, userController.fetchUsers);
