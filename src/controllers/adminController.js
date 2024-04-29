@@ -48,7 +48,7 @@ const loginAdmin = async (req, res) => {
         const token = jwtUtils.generateToken(payload);
         const refreshToken = jwtUtils.generateRefreshToken(payload);
 
-        res.json({ token, refreshToken, msg: "Login successful" });
+        res.json({ token, refreshToken, role, msg: "Login successful" });
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Server Error");
