@@ -40,10 +40,12 @@ const loginAdmin = async (req, res) => {
             return res.status(400).json({ msg: "Invalid credentials" });
         }
 
+        const role = admin.role;
+
         const payload = {
             userId: admin._id,
             username: admin.username,
-            role: admin.role,
+            role: role,
         }
         const token = jwtUtils.generateToken(payload);
         const refreshToken = jwtUtils.generateRefreshToken(payload);
